@@ -1,5 +1,6 @@
 function Component(selector) {
   this.selector = selector;
+  this.calledTimes = 0;
 }
 
 Component.prototype.init = function() {

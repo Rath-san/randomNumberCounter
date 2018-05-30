@@ -4,24 +4,35 @@
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="./js/component.js"></script>
         <script src="./js/components/ranking.component.js"></script>
+        <script src="./js/components/random.component.js"></script>
         <script src="./js/main.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
     <body>
         <div class="container">
             <div class="row">
-                <div class="col-sm">
+                <div class="col-sm p-4">
                     <div class="card">
                         <div class="card-header">
-                            Numbers ranking
+                            Numbers rankin 
+                            <br> <small class="text-muted">from most to least times fetched <span id="iteration-counter" class="badge badge-primary">0</span></small>
                         </div>
-                        <ul id="numbers-ranking" class="list-group list-group-flash"></ul>
+                        <div class="card-body">
+                            <ul id="numbers-ranking" class="list-group list-group-flash"></ul>
+                        </div>
+                        <!-- <div class="card-footer">
+                            <span class="small ">Numbers were fetched  times</span>
+                        </div> -->
                     </div>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm p-4">
                     <div class="card">
                         <div class="card-header">
                             Latest numbers
+                        </div>
+                        <div class="card-body">
+
+                            <ul id="numbers-random" class="list-group list-group-flash"></ul>
                         </div>
                     </div>
                 </div>
