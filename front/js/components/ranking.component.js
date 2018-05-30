@@ -29,9 +29,23 @@ Ranking.prototype.render = function () {
 
   this.numbers.forEach(function (number) {
     const listElement = document.createElement('li');
-    listElement.classList.add('list-group-item');
-    listElement.innerHTML = number.id;
+    const smallElement = document.createElement('small');
 
+    smallElement.classList.add('badge', 'badge-primary')
+    listElement.classList.add('list-group-item');
+
+    listElement.innerHTML = number.id;
+    smallElement.innerHTML = number.showedTimes
+
+    const style = {
+      'display': 'flex',
+      'justify-content': 'space-between',
+      'align-items': 'center'
+    };
+
+    Object.assign(listElement.style, style);
+
+    listElement.appendChild(smallElement);
     container.appendChild(listElement);
   });
 };

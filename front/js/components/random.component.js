@@ -1,6 +1,7 @@
-function Random(selector) {
+function Random(selector, interval) {
   Component.call(this, selector);
   this.randomNumbers = [];
+  this.interval = interval;
 };
 
 Random.prototype = Object.create(Component.prototype);
@@ -11,9 +12,9 @@ Random.prototype.init = function (rankingComponent) {
   this.getData();
 };
 
-Random.prototype.getData = function() {
+Random.prototype.getData = function () {
+  /* fetch random numbersfrom endpoint every this.interval(ms), after succesfull fetch repeat process*/
   const self = this;
-  /* fetch random numbersfrom endpoint, after succesfull fetch repeat process*/
   axios.get('http://localhost:3000/random-numbers')
     .then(function (response) {
       self.randomNumbers = response.data.data.map(function (number) {
@@ -23,16 +24,15 @@ Random.prototype.getData = function() {
       });
       self.update();
       self.rankingComponent.update(self.randomNumbers);
-
     }).then(() => new Promise(resolve => setTimeout(function () {
       self.getData();
-    }, 1000)))
+    }, self.interval)))
     .catch(function (error) {
       console.error(error);
     });
 };
 
-Random.prototype.update = function() {
+Random.prototype.update = function () {
   /* clear and render component */
   this.clear();
   this.render();
@@ -54,5 +54,22 @@ Random.prototype.render = function () {
 
     container.appendChild(listElement);
   });
+  this.fetchTimer();
 };
 
+Random.prototype.fetchTimer = function () {
+  const info = document.querySelector('#fetch-timer');
+  let time = this.interval / 1000;
+
+  const printTime = function () {
+    if (time <= 0) return;
+    info.innerHTML = time;
+    setTimeout(() => {
+      printTime();
+    }, 1000);
+
+    time--;
+  }
+
+  printTime();
+}
