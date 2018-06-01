@@ -7,8 +7,7 @@ function Random(selector, interval) {
 Random.prototype = Object.create(Component.prototype);
 Random.constructor = Random;
 
-Random.prototype.init = function (rankingComponent) {
-  this.rankingComponent = rankingComponent;
+Random.prototype.init = function () {
   this.getData();
 };
 
@@ -23,7 +22,7 @@ Random.prototype.getData = function () {
         }
       });
       self.update();
-      self.rankingComponent.update(self.randomNumbers);
+      ranking.update(self.randomNumbers);
     }).then(() => new Promise(resolve => setTimeout(function () {
       self.getData();
     }, self.interval)))
