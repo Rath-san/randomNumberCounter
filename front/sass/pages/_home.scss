@@ -1,4 +1,18 @@
 body {
     width: 100vw;
     height: 100vh;
+    background: linear-gradient(120deg, #eee, white);
+}
+
+.row,
+.container {
+    height: 100%;
+    > * {
+        display: flex;
+        align-items: flex-end;
+        height: 50vh;
+        &:last-child {
+            align-items: flex-start;
+        }
+    }
 }
