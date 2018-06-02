@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="./js/component.js"></script>
-        <script src="./js/components/ranking.component.js"></script>
-        <script src="./js/components/random.component.js"></script>
-        <script src="./js/main.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./css/styles.css">
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-sm p-4">
-                    <div class="card">
+                    <div class="card card-custom">
                         <div class="card-header">
-                            Numbers rankin <span id="iteration-counter" class="badge badge-primary"></span>
-                            <br> <small class="text-muted">from most to least times fetched</small>
+                            Numbers rankin <span id="iteration-counter" class="badge badge-gradient-blue"></span>
+                            <br> <small class="">from most to least times fetched</small>
                         </div>
                         <div class="card-body">
-                            <ul id="numbers-ranking" class="list-group list-group-flash"></ul>
+                            <ul id="numbers-ranking" class="list-card"></ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm p-4">
-                    <div class="card">
+                    <div class="card card-custom">
                         <div class="card-header">
                             Latest numbers
-                            <br> <small class="text-muted">next fetch in <span id="fetch-timer" class="badge badge-primary"></span> seconds</small>
+                            <br> <small class="">next fetch in <span id="fetch-timer" class="badge badge-gradient-red"></span> seconds</small>
                         </div>
                         <div class="card-body">
-
-                            <ul id="numbers-random" class="list-group list-group-flash"></ul>
+                            <ul id="numbers-random" class="list-card"></ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="./js/component.js"></script>
+        <script src="./js/components/ranking.component.js"></script>
+        <script src="./js/components/random.component.js"></script>
+        <script src="./js/main.js"></script>
     </body>
 </html>

@@ -46,12 +46,22 @@ Random.prototype.clear = function () {
 Random.prototype.render = function () {
   const container = this.getDOMElement();
 
+  let bgPos = 0;
+
   this.randomNumbers.forEach(function (number) {
     const listElement = document.createElement('li');
-    listElement.classList.add('list-group-item');
+    listElement.classList.add('list-card-item');
     listElement.innerHTML = number.id;
 
-    container.appendChild(listElement);
+    const style = {
+      'background-position': bgPos + 'px'
+    };
+
+    Object.assign(listElement.style, style);
+
+    container.appendChild(listElement);    
+    
+    bgPos -= 70;
   });
   this.fetchTimer();
 };

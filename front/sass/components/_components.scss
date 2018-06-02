@@ -1,0 +1,69 @@
+.card {
+    &-custom {
+        border: none;
+        background-color: transparent;
+    }
+    &-header {
+        font-weight: bold;
+        color: white;
+        // text-align: center;
+        border: none;
+        background: none;
+    }
+}
+
+.list-card {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 0;
+    padding: 0;
+    // justify-content: center;
+    text-align: center;
+    list-style: none;
+    font-family: 'Lobster', cursive;
+    
+}
+
+.list-card-item {
+    position: relative;
+    // text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 2em;
+    flex-direction: column;
+    padding: .3em;
+    width: 70px;
+    border-radius: 5px;
+    margin: .15em;
+    #numbers-random & {
+        box-shadow: 0 5px 10px 0 rgba($light-red, .5);
+        background: $olr;
+        background-size: 350px;
+    }
+    #numbers-ranking & {
+        box-shadow: 0 5px 10px 0 rgba($dark-blue, .5);
+        background: $lbdb;
+        background-size: 100vw;
+
+    }
+    .badge {
+        font-size: .3em;
+        font-weight: normal;
+        background: $lbdb;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
+
+.badge-gradient {
+
+    &-blue {
+        background: $lbdb;
+        color: white;
+    }
+    &-red {
+        background: $olr;
+        color: white;
+    }
+} 

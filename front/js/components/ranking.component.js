@@ -26,27 +26,28 @@ Ranking.prototype.init = function () {
 
 Ranking.prototype.render = function () {
   const container = this.getDOMElement();
-
+  const self = this;
+  let bgPos = 0;
   this.numbers.forEach(function (number) {
     const listElement = document.createElement('li');
     const smallElement = document.createElement('small');
 
     smallElement.classList.add('badge', 'badge-primary')
-    listElement.classList.add('list-group-item');
+    listElement.classList.add('list-card-item');
 
     listElement.innerHTML = number.id;
     smallElement.innerHTML = number.showedTimes
 
     const style = {
-      'display': 'flex',
-      'justify-content': 'space-between',
-      'align-items': 'center'
+      'background-position': bgPos + 'px'
     };
 
     Object.assign(listElement.style, style);
 
     listElement.appendChild(smallElement);
-    container.appendChild(listElement);
+    container.appendChild(listElement);    
+    
+    bgPos -= 70;
   });
 };
 

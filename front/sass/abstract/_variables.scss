@@ -1,0 +1,20 @@
+// colors
+$deep-purple: #5b247a;
+$blue: #1bcedf;
+$light-blue: #17ead9;
+$dark-blue: #6078ea;
+
+$orange: #fce38a;
+$light-red: #f38181;
+
+// gradients
+
+$dpb: linear-gradient(120deg, $deep-purple, $blue);
+$lbdb: linear-gradient(120deg, $light-blue, $dark-blue);
+$olr: linear-gradient(120deg, $orange, $light-red);
+
+
+
+body {
+    background: $dpb;
+}
