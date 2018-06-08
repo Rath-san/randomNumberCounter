@@ -1,88 +1,135 @@
-function Ranking(selector) {
-  Component.call(this, selector);
-  this.numbers = [];
-  this.iteration = 0;
-}
+class RankingComponent extends Component {
 
-Ranking.prototype = Object.create(Component.prototype);
-Ranking.constructor = Ranking;
+  constructor(
+    selector, rankingService
+  ) {
+    super(selector)
+    this.iteration = 0;
+    this.numbers = [];
+    this.eventBus = rankingService.eventBus;
+  }
 
-Ranking.prototype.init = function () {
-  const self = this;
-  axios.get('http://localhost:3000/numbers')
-    .then(function (response) {
-      self.numbers = response.data.data.map(function (number) {
-        return {
-          id: number,
-          showedTimes: 0
-        }
-      });
-      self.render();
-    })
-    .catch(function (error) {
-      console.error(error);
+  _getData() {
+    return new Promise((resolve, reject) => {
+      axios.get('http://localhost:3000/numbers')
+        .then((res) => {
+          this.numbers = res.data.data.map((number) => {
+            return {
+              id: number,
+              showedTimes: 0
+            }
+          });
+          resolve(
+            'numbers fetched'
+          );
+        })
+        .catch((error) => {
+          reject(
+            console.error(error)
+          )
+        });
     });
-};
+  }
 
-Ranking.prototype.render = function () {
-  const container = this.getDOMElement();
-  const self = this;
-  let bgPos = 0;
-  this.numbers.forEach(function (number) {
-    const listElement = document.createElement('li');
-    const smallElement = document.createElement('small');
+  init() {
 
-    smallElement.classList.add('badge', 'badge-primary')
-    listElement.classList.add('list-card-item');
+    this.eventBus.subscribe('hoveronnumber', (i) => {
+      const container = this.getDOMElement();
 
-    listElement.innerHTML = number.id;
-    smallElement.innerHTML = number.showedTimes
+      if (i) {
 
-    const style = {
-      'background-position': bgPos + 'px'
-    };
+        const index = this.numbers.findIndex(x => {
+          return i.id === x.id;
+        });
 
-    Object.assign(listElement.style, style);
+        const child = container.childNodes[index]
+        child.classList.add('active');
 
-    listElement.appendChild(smallElement);
-    container.appendChild(listElement);    
-    
-    bgPos -= 70;
-  });
-};
+        const style = {
+          'perspective-origin': `calc(${child.offsetLeft}px + ${child.clientWidth / 2}px)`
+        };
+        Object.assign(container.style, style);
 
-Ranking.prototype.updateRandomFetchCounter = function () {
-  /* renders iteration in DOM */
-  const fetchCounter = document.querySelector('#iteration-counter');
-  fetchCounter.innerHTML = this.iteration;
-};
+      } else {
+        container.querySelector('.active').classList.remove('active');
+      }
 
-Ranking.prototype.sortNumbers = function () {
-  /* Sorting this.numbers by this.numbers[n].showedTimes */
-  this.numbers.sort(function (a, b) {
-    return a.showedTimes < b.showedTimes
-  });
-};
+    });
 
-Ranking.prototype.clear = function () {
-  /* clearing component html */
-  const container = this.getDOMElement();
-  container.innerHTML = '';
-};
+    this.eventBus.subscribe('randomFetched', (i) => {
+      const randomPromise = new Promise((resolve, reject) => {
+        resolve(i);
+      });
 
-Ranking.prototype.update = function (randomNumbers) {
-  /* update component data every timerandom number is fetched by RanfomNumberComponent */
-  const self = this
-  this.iteration++;
-  randomNumbers.forEach(function (randomNumber) {
-    self.numbers.filter(function (rankingNumber) {
-      if (rankingNumber.id === randomNumber.id) {
-        rankingNumber.showedTimes++;
+      if (this.numbers.length === 0) {
+        Promise.all([this._getData(), randomPromise])
+          .then((x) => {
+            this._update(x[1])
+          });
+      } else {
+        randomPromise.then((x) => {
+          this._update(x);
+        })
+
+      }
+
+    });
+
+  }
+
+  _render() {
+    const container = this.getDOMElement();
+    let bgPos = 0;
+    this.numbers.forEach((number) => {
+      const listElement = document.createElement('li');
+      const smallElement = document.createElement('small');
+
+      smallElement.classList.add('badge', 'badge-primary')
+      listElement.classList.add('list-card-item');
+
+      listElement.innerHTML = number.id;
+      smallElement.innerHTML = number.showedTimes
+
+      const style = {
+        'background-position': bgPos + 'px'
+      };
+
+      Object.assign(listElement.style, style);
+
+      listElement.appendChild(smallElement);
+      container.appendChild(listElement);
+
+      bgPos -= 70;
+    });
+  }
+
+  _clear() {
+    const container = this.getDOMElement();
+    container.innerHTML = '';
+  }
+
+  _update(randomNumbers) {
+    this.iteration++;
+    this.numbers.filter((i) => {
+      if (
+        randomNumbers.findIndex(x => x.id === i.id) > -1
+      ) {
+        i.showedTimes++
       }
     });
-  });
-  this.sortNumbers();
-  this.updateRandomFetchCounter();
-  this.clear();
-  this.render();
-};
+    this._sortNumbers();
+    this._updateRandomFetchCounter();
+    this._clear();
+    this._render();
+  }
+
+  _sortNumbers() {
+    this.numbers.sort((a, b) => a.showedTimes < b.showedTimes);
+  }
+
+  _updateRandomFetchCounter() {
+    const fetchCounter = document.querySelector('#iteration-counter');
+    fetchCounter.innerHTML = this.iteration;
+  }
+
+}
