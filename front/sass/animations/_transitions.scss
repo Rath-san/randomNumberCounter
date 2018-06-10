@@ -1,0 +1,19 @@
+// @function some-function($num1, $num2) {
+//     @return $num1 + $num2
+// }
+$animation-timing-function: ease-in-out;
+$animation-duration: 500;
+$animation-delay: 0;
+// $aniamtion-
+.list-card {
+    perspective: 400px;
+    transition: perspective-origin .2s ease;
+    li {
+        transform: translateZ(-25px);
+        transition: all .25s ease;
+        &.active {
+            z-index: 1;
+            transform: translateZ(25px);
+        }
+    }
+}
