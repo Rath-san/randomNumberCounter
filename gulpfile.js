@@ -10,6 +10,7 @@ var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
 
+
 // var pug = require('gulp-pug');
 // var data = require('gulp-data');
 
@@ -65,7 +66,7 @@ var sassPaths = [
 //   bowerPath + '/font-awesome/scss/',
 //   bowerPath + '/material-design-lite/src/'
 ];
-'use strict';
+
 gulp.task('sass', function() {
     gulp.src('./front/sass/*.{sass,scss}')
         .pipe(sourcemaps.init())
