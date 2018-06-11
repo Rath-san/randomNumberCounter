@@ -103,8 +103,7 @@ gulp.task('front', ['sass'], function() {
         baseDir: ["./front"]
       }
     });
-    // gulp.watch("_pug/**/*.pug", ['pug']);
     gulp.watch("front/sass/**/*.{sass,scss}", ['sass']);
+    gulp.watch("front/*.html").on('change', reload);
     gulp.watch("front/js/**/*.js").on('change', reload);
-    gulp.watch("front/js/**/*.html").on('change', reload);
 });

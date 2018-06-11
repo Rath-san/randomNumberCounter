@@ -23,7 +23,7 @@ class RandomComponent extends Component {
         printTime();
       }, 1000);
       time--;
-    }
+    };
     printTime();
   }
 
@@ -33,10 +33,10 @@ class RandomComponent extends Component {
         this.randomNumbers = res.data.data.map((number) => {
           return {
             id: number
-          }
+          };
         });
         this._update();
-        this.eventBus.post('randomFetched', this.randomNumbers)
+        this.eventBus.post('randomFetched', this.randomNumbers);
       }).then(() => new Promise((resolve) => setTimeout(() => {
         this._getData();
       }, this.interval)))
@@ -66,7 +66,7 @@ class RandomComponent extends Component {
       });
       listElement.addEventListener('mouseleave', () => {
         this.eventBus.post('hoveronnumber', undefined);
-      })
+      });
 
       bgPos -= 70;
     });

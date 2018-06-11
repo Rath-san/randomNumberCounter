@@ -3,7 +3,7 @@ class RankingComponent extends Component {
   constructor(
     selector, rankingService
   ) {
-    super(selector)
+    super(selector);
     this.iteration = 0;
     this.numbers = [];
     this.eventBus = rankingService.eventBus;
@@ -17,7 +17,7 @@ class RankingComponent extends Component {
             return {
               id: number,
               showedTimes: 0
-            }
+            };
           });
           resolve(
             'numbers fetched'
@@ -26,7 +26,7 @@ class RankingComponent extends Component {
         .catch((error) => {
           reject(
             console.error(error)
-          )
+          );
         });
     });
   }
@@ -42,7 +42,7 @@ class RankingComponent extends Component {
           return i.id === x.id;
         });
 
-        const child = container.childNodes[index]
+        const child = container.childNodes[index];
         child.classList.add('active');
 
         const style = {
@@ -64,15 +64,13 @@ class RankingComponent extends Component {
       if (this.numbers.length === 0) {
         Promise.all([this._getData(), randomPromise])
           .then((x) => {
-            this._update(x[1])
+            this._update(x[1]);
           });
       } else {
         randomPromise.then((x) => {
           this._update(x);
-        })
-
+        });
       }
-
     });
 
   }
@@ -84,11 +82,11 @@ class RankingComponent extends Component {
       const listElement = document.createElement('li');
       const smallElement = document.createElement('small');
 
-      smallElement.classList.add('badge', 'badge-primary')
+      smallElement.classList.add('badge', 'badge-primary');
       listElement.classList.add('list-card-item');
 
       listElement.innerHTML = number.id;
-      smallElement.innerHTML = number.showedTimes
+      smallElement.innerHTML = number.showedTimes;
 
       const style = {
         'background-position': bgPos + 'px'
@@ -110,13 +108,18 @@ class RankingComponent extends Component {
 
   _update(randomNumbers) {
     this.iteration++;
-    this.numbers.filter((i) => {
-      if (
-        randomNumbers.findIndex(x => x.id === i.id) > -1
-      ) {
-        i.showedTimes++
+
+    const flatNumbers = this.numbers.map(number => number.id);
+    const rn = randomNumbers.map(x => x.id);
+
+    const sims = rn.filter(val => {
+      const i = flatNumbers.indexOf(val);
+      if (i > -1) {
+        console.log(i);
+        this.numbers[i].showedTimes++;
       }
     });
+
     this._sortNumbers();
     this._updateRandomFetchCounter();
     this._clear();
